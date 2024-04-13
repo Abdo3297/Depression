@@ -10,10 +10,10 @@ class AvailabilityResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'id' => $this->whenHas('id'),
-            'day' => $this->whenHas('day'),
-            'from' => $this->whenHas('from'),
-            'to' => $this->whenHas('to'),
+            'id' => $this->id,
+            'day' => $this->day,
+            'from' => $this->from,
+            'to' => $this->to,
         ];
     }
 }

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Availability\AvailabilityController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Post\PostController;
 use App\Http\Controllers\Auth\SocialiteController;
@@ -63,4 +64,10 @@ Route::prefix('doctor')->middleware(['auth:doctor_api'])->group(function () {
     Route::get('show-patients-profile/{id}', [PatientProfileDutTODoctorController::class, 'show']);
     
     Route::get('statistics',[StatisticsController::class,'statistics']);
+
+    Route::get('availabilities', [AvailabilityController::class, 'index']);
+    Route::get('availabilities/{id}', [AvailabilityController::class, 'show']);
+    Route::post('availabilities', [AvailabilityController::class, 'store']);
+    Route::delete('availabilities/{id}', [AvailabilityController::class, 'destroy']);
+    Route::put('availabilities/{id}', [AvailabilityController::class, 'update']);
 });
