@@ -9,6 +9,7 @@ use App\Http\Controllers\Prediction\PredictionController;
 use App\Http\Controllers\Profile\DoctorProfileController;
 use App\Http\Controllers\Profile\PatientProfileController;
 use App\Http\Controllers\Profile\DoctorProfileDutTOPatientController;
+use App\Http\Controllers\Profile\PatientProfileDutTODoctorController;
 
 Route::get('{type}/auth/google', [SocialiteController::class, 'redirectToGoogle'])->whereIn('type', ['patient', 'doctor']);
 Route::get('auth/google/callback', [SocialiteController::class, 'handleGoogleCallback']);
@@ -28,8 +29,8 @@ Route::prefix('patient')->middleware(['auth:patient_api'])->group(function () {
     Route::get('show-profile', [PatientProfileController::class, 'showProfile']);
     Route::post('update-profile', [PatientProfileController::class, 'updateProfile']);
     Route::delete('delete-profile', [PatientProfileController::class, 'deleteProfile']);
-    Route::get('doctor-posts', [PostController::class, 'index']);
-    Route::get('doctor-posts/{id}', [PostController::class, 'show']);
+    Route::get('posts', [PostController::class, 'index']);
+    Route::get('posts/{id}', [PostController::class, 'show']);
     Route::get('show-doctors-profile', [DoctorProfileDutTOPatientController::class, 'index']);
     Route::get('show-doctors-profile/{id}', [DoctorProfileDutTOPatientController::class, 'show']);
     Route::post('survey-predict', [PredictionController::class, 'predict']);
@@ -50,4 +51,13 @@ Route::prefix('doctor')->middleware(['auth:doctor_api'])->group(function () {
     Route::get('show-profile', [DoctorProfileController::class, 'showProfile']);
     Route::post('update-profile', [DoctorProfileController::class, 'updateProfile']);
     Route::delete('delete-profile', [DoctorProfileController::class, 'deleteProfile']);
+
+    Route::get('posts', [PostController::class, 'index']);
+    Route::get('posts/{id}', [PostController::class, 'show']);
+    Route::post('posts', [PostController::class, 'store']);
+    Route::delete('posts/{id}', [PostController::class, 'destroy']);
+    Route::post('posts/{id}', [PostController::class, 'update']);
+
+    Route::get('show-patients-profile', [PatientProfileDutTODoctorController::class, 'index']);
+    Route::get('show-patients-profile/{id}', [PatientProfileDutTODoctorController::class, 'show']);
 });

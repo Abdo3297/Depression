@@ -23,13 +23,11 @@ class SocialiteController extends Controller
         $type = session('type');
         $request->session()->forget('type');
         if ($type == 'patient') {
-            return $this->Socialite(Patient::class,'patient','patient_profile');
-        } else {
-            return $this->Socialite(Doctor::class,'doctor','doctor_profile');
+            return $this->Socialite(Patient::class, 'patient', 'patient_profile');
         }
-        
+        return $this->Socialite(Doctor::class, 'doctor', 'doctor_profile');
     }
-    private function Socialite($modelName,$roleName,$mediaCollection)
+    private function Socialite($modelName, $roleName, $mediaCollection)
     {
         $socialiteUser = Socialite::driver(config('depression_constant.GoogleDriver'))->stateless()->user();
 

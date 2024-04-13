@@ -10,10 +10,10 @@ class PostResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'id' => $this->whenHas('id'),
-            'text_body' => $this->whenHas('text_body'),
-            'post_image' => $this->whenHas($this->getFirstMediaUrl('post_image')),
-            'post_created' => $this->whenHas('created_at'),
+            'id' => $this->id,
+            'text_body' => $this->text_body,
+            'post_image' => $this->getFirstMediaUrl('post_image'),
+            'post_created' => $this->created_at,
             'doctor'=>DoctorResource::make($this->whenLoaded('doctor')),
         ];
     }

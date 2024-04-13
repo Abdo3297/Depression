@@ -90,4 +90,13 @@ class Controller extends BaseController
             'code' => Response::HTTP_OK,
         ], Response::HTTP_OK);
     }
+    public function createResponse($data):JsonResponse
+    {
+        return response()->json([
+            'message' => 'record created',
+            'data' => $data,
+            'status' => true,
+            'code' => Response::HTTP_CREATED,
+        ], Response::HTTP_CREATED);
+    }
 }
