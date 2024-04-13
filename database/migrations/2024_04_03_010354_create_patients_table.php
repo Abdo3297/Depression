@@ -18,7 +18,7 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password')->nullable();
             $table->date('birth')->nullable();
-            $table->enum('result',['yes','no'])->default('no');
+            $table->enum('result',['yes','no'])->nullable();
             $table->string('provider')->nullable();
             $table->string('provider_id')->nullable();
             $table->rememberToken();

@@ -30,7 +30,7 @@ class PatientSeeder extends Seeder
         ]);
         $patient_role->givePermissionTo($patientPermissions);
 
-        $doctor = Patient::create([
+        $patient = Patient::create([
             'name' => 'patient',
             'email' => 'patient@test.com',
             'password' => Hash::make('patient@test.com'),

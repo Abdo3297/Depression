@@ -7,6 +7,7 @@ use App\Http\Controllers\Auth\DoctorAuthController;
 use App\Http\Controllers\Auth\PatientAuthController;
 use App\Http\Controllers\Prediction\PredictionController;
 use App\Http\Controllers\Profile\DoctorProfileController;
+use App\Http\Controllers\Statistics\StatisticsController;
 use App\Http\Controllers\Profile\PatientProfileController;
 use App\Http\Controllers\Profile\DoctorProfileDutTOPatientController;
 use App\Http\Controllers\Profile\PatientProfileDutTODoctorController;
@@ -60,4 +61,6 @@ Route::prefix('doctor')->middleware(['auth:doctor_api'])->group(function () {
 
     Route::get('show-patients-profile', [PatientProfileDutTODoctorController::class, 'index']);
     Route::get('show-patients-profile/{id}', [PatientProfileDutTODoctorController::class, 'show']);
+    
+    Route::get('statistics',[StatisticsController::class,'statistics']);
 });
