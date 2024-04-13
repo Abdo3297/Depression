@@ -30,45 +30,36 @@ class AvailabilityController extends Controller
     public function store(StoreAvailabilityRequest $request)
     {
         $data = $request->validated();
-
         $from = Carbon::createFromFormat('g:i A', $data['from']);
         $to = Carbon::createFromFormat('g:i A', $data['to']);
-
-
         if ($to->lte($from)) {
             $to->addDay();
         }
-
         $diffMinutes = $to->diffInMinutes($from);
         if ($diffMinutes != 60) {
             return $this->errorResponse('The time range exceeds 60 minutes.');
         }
-
         $availability = Availability::create($data);
-
         return $this->createResponse(AvailabilityResource::make($availability));
     }
     public function update(StoreAvailabilityRequest $request, $id)
     {
         $data = $request->validated();
-
         $from = Carbon::createFromFormat('g:i A', $data['from']);
         $to = Carbon::createFromFormat('g:i A', $data['to']);
-
         if ($to->lte($from)) {
             $to->addDay();
         }
-
         $diffMinutes = $to->diffInMinutes($from);
         if ($diffMinutes != 60) {
             return $this->errorResponse('The time range must be exactly 60 minutes.');
         }
-
-        $availability = Availability::findOrFail($id);
-        $availability->update($data);
-
-        return $this->okResponse('record updated',AvailabilityResource::make($availability));
-
+        $availability = Availability::find($id);
+        if ($availability) {
+            $availability->update($data);
+            return $this->okResponse('record updated', AvailabilityResource::make($availability));
+        }
+        return $this->errorResponse('record not found');
     }
 
     public function destroy($id)
