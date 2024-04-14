@@ -1,15 +1,16 @@
 <?php
 
-use App\Http\Controllers\Availability\AvailabilityController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Post\PostController;
 use App\Http\Controllers\Auth\SocialiteController;
 use App\Http\Controllers\Auth\DoctorAuthController;
+use App\Http\Controllers\Meeting\MeetingController;
 use App\Http\Controllers\Auth\PatientAuthController;
 use App\Http\Controllers\Prediction\PredictionController;
 use App\Http\Controllers\Profile\DoctorProfileController;
 use App\Http\Controllers\Statistics\StatisticsController;
 use App\Http\Controllers\Profile\PatientProfileController;
+use App\Http\Controllers\Availability\AvailabilityController;
 use App\Http\Controllers\Profile\DoctorProfileDutTOPatientController;
 use App\Http\Controllers\Profile\PatientProfileDutTODoctorController;
 
@@ -36,6 +37,7 @@ Route::prefix('patient')->middleware(['auth:patient_api'])->group(function () {
     Route::get('show-doctors-profile', [DoctorProfileDutTOPatientController::class, 'index']);
     Route::get('show-doctors-profile/{id}', [DoctorProfileDutTOPatientController::class, 'show']);
     Route::post('survey-predict', [PredictionController::class, 'predict']);
+    Route::post('request-meeting', [MeetingController::class,'requestMeeting']);
 });
 
 Route::prefix('doctor')->group(function () {
@@ -53,18 +55,14 @@ Route::prefix('doctor')->middleware(['auth:doctor_api'])->group(function () {
     Route::get('show-profile', [DoctorProfileController::class, 'showProfile']);
     Route::post('update-profile', [DoctorProfileController::class, 'updateProfile']);
     Route::delete('delete-profile', [DoctorProfileController::class, 'deleteProfile']);
-
     Route::get('posts', [PostController::class, 'index']);
     Route::get('posts/{id}', [PostController::class, 'show']);
     Route::post('posts', [PostController::class, 'store']);
     Route::delete('posts/{id}', [PostController::class, 'destroy']);
     Route::post('posts/{id}', [PostController::class, 'update']);
-
     Route::get('show-patients-profile', [PatientProfileDutTODoctorController::class, 'index']);
     Route::get('show-patients-profile/{id}', [PatientProfileDutTODoctorController::class, 'show']);
-    
     Route::get('statistics',[StatisticsController::class,'statistics']);
-
     Route::get('availabilities', [AvailabilityController::class, 'index']);
     Route::get('availabilities/{id}', [AvailabilityController::class, 'show']);
     Route::post('availabilities', [AvailabilityController::class, 'store']);

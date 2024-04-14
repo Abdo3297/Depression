@@ -14,7 +14,6 @@ class DatabaseSeeder extends Seeder
             DoctorSeeder::class,
             PostSeeder::class,
             AvailabilitSeeder::class,
-            TestSeeder::class,
         ]);
         
     }
