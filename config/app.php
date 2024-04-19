@@ -196,6 +196,7 @@ return [
         App\Providers\RouteServiceProvider::class,
         Ichtrojan\Otp\OtpServiceProvider::class,
         Spatie\Permission\PermissionServiceProvider::class,
+        Jubaer\Zoom\ZoomServiceProvider::class,
     ],
 
     /*
@@ -212,6 +213,7 @@ return [
     'aliases' => Facade::defaultAliases()->merge([
         // 'ExampleClass' => App\Example\ExampleClass::class,
         'Otp' => Ichtrojan\Otp\Otp::class,
+        'Zoom' => Jubaer\Zoom\Facades\Zoom::class,
     ])->toArray(),
 
 ];

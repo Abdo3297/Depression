@@ -9,6 +9,7 @@ use App\Http\Controllers\Auth\PatientAuthController;
 use App\Http\Controllers\Prediction\PredictionController;
 use App\Http\Controllers\Profile\DoctorProfileController;
 use App\Http\Controllers\Statistics\StatisticsController;
+use App\Http\Controllers\Meeting\RequestMeetingController;
 use App\Http\Controllers\Profile\PatientProfileController;
 use App\Http\Controllers\Availability\AvailabilityController;
 use App\Http\Controllers\Profile\DoctorProfileDutTOPatientController;
@@ -37,7 +38,7 @@ Route::prefix('patient')->middleware(['auth:patient_api'])->group(function () {
     Route::get('show-doctors-profile', [DoctorProfileDutTOPatientController::class, 'index']);
     Route::get('show-doctors-profile/{id}', [DoctorProfileDutTOPatientController::class, 'show']);
     Route::post('survey-predict', [PredictionController::class, 'predict']);
-    Route::post('request-meeting', [MeetingController::class,'requestMeeting']);
+    Route::post('request-meeting', [RequestMeetingController::class, 'requestMeeting']);
 });
 
 Route::prefix('doctor')->group(function () {
@@ -62,10 +63,12 @@ Route::prefix('doctor')->middleware(['auth:doctor_api'])->group(function () {
     Route::post('posts/{id}', [PostController::class, 'update']);
     Route::get('show-patients-profile', [PatientProfileDutTODoctorController::class, 'index']);
     Route::get('show-patients-profile/{id}', [PatientProfileDutTODoctorController::class, 'show']);
-    Route::get('statistics',[StatisticsController::class,'statistics']);
+    Route::get('statistics', [StatisticsController::class, 'statistics']);
     Route::get('availabilities', [AvailabilityController::class, 'index']);
     Route::get('availabilities/{id}', [AvailabilityController::class, 'show']);
     Route::post('availabilities', [AvailabilityController::class, 'store']);
     Route::delete('availabilities/{id}', [AvailabilityController::class, 'destroy']);
     Route::put('availabilities/{id}', [AvailabilityController::class, 'update']);
+    Route::post('accept-meeting', [MeetingController::class, 'acceptMeeting']);
+    Route::post('reject-meeting', [MeetingController::class, 'rejectMeeting']);
 });

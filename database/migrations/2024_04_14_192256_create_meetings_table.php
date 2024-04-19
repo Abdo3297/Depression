@@ -15,14 +15,10 @@ return new class extends Migration
             $table->id();
             $table->foreignId('patient_id')->constrained('patients')->cascadeOnDelete()->cascadeOnUpdate();
             $table->foreignId('doctor_id')->constrained('doctors')->cascadeOnDelete()->cascadeOnUpdate();
-            $table->foreignId('available_id')->constrained('availabilities')->cascadeOnDelete()->cascadeOnUpdate();
-            $table->dateTime('start_at')->nullable(); 
             $table->string('topic')->nullable(); 
             $table->string('meeting_id')->nullable(); 
-            $table->string('password')->nullable(); 
             $table->text('start_url')->nullable(); 
             $table->text('join_url')->nullable();
-            $table->integer('duration')->default(60); 
             $table->string('status')->default('pending'); 
             $table->timestamps();
         });

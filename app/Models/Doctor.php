@@ -8,6 +8,7 @@ use App\Models\Post;
 use App\Models\Availability;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\MediaLibrary\HasMedia;
+use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Notifications\Notifiable;
 use Spatie\MediaLibrary\InteractsWithMedia;
@@ -19,14 +20,14 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 class Doctor extends Authenticatable implements HasMedia
 {
     use HasApiTokens, HasFactory, Notifiable,InteractsWithMedia,HasRoles;
-    protected $fillable = [
-        'name',
-        'email',
-        'password',
-        'birth',
-        'provider',
-        'provider_id'
-    ];
+    protected $fillable = [];
+    public function __construct(array $attributes = [])
+    {
+        parent::__construct($attributes);
+        $columnListing = DB::getSchemaBuilder()->getColumnListing($this->getTable());
+        $columnsToRemove = ['id', 'created_at', 'updated_at'];
+        $this->fillable = array_diff($columnListing, $columnsToRemove);
+    }
     protected $hidden = [
         'password',
         'remember_token',
@@ -53,5 +54,21 @@ class Doctor extends Authenticatable implements HasMedia
     public function availabilities(): HasMany
     {
         return $this->hasMany(Availability::class,'doctor_id','id');
+    }
+
+
+    public static function clientID()
+    {
+        return 'Ta8XK2ctSm6yzNNsRpUFVA';
+    }
+
+    public static function clientSecret()
+    {
+        return 'GM316pp4BDJoQLLWiGaNLoyg7bf8Wxd7';
+    }
+
+    public static function accountID()
+    {
+        return '8n4zKQfTRCqOqspY9HbSZA';
     }
 }
