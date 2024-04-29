@@ -14,6 +14,7 @@ class RequestMeetingResource extends JsonResource
             "patient_id"=> $this->patient_id,
             "doctor_id"=> $this->doctor_id,
             "topic"=> $this->topic,
+            "status"=> $this->status,
         ];
     }
 }

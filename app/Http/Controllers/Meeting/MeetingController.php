@@ -13,11 +13,19 @@ class MeetingController extends Controller
 {
     public function index()
     {
-        //
+        if (Meeting::exists()) {
+            $meeting = Meeting::where('doctor_id',auth('doctor_api')->user()->id)->paginate();
+            return $this->paginateResponse(AcceptMeetingResource::collection($meeting));
+        }
+        return $this->errorResponse('data not found');
     }
     public function show($id)
     {
-        //
+        $meeting = Meeting::where('doctor_id',auth('doctor_api')->user()->id)->find($id);
+        if ($meeting) {
+            return $this->okResponse('data fetched successfully',AcceptMeetingResource::make($meeting));
+        }
+        return $this->errorResponse('data not found');
     }
     public function acceptMeeting(Request $request)
     {
@@ -57,6 +65,9 @@ class MeetingController extends Controller
     public function rejectMeeting(Request $request) {
         Meeting::where('doctor_id',auth('doctor_api')->user()->id)->first()->update([
             'status'=>'rejected'
+        ]);
+        return response()->json([
+            'message'=>'rejectMeeting successfully'
         ]);
     }
     public function update(Request $request, $id)

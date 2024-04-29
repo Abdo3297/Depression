@@ -39,6 +39,7 @@ Route::prefix('patient')->middleware(['auth:patient_api'])->group(function () {
     Route::get('show-doctors-profile/{id}', [DoctorProfileDutTOPatientController::class, 'show']);
     Route::post('survey-predict', [PredictionController::class, 'predict']);
     Route::post('request-meeting', [RequestMeetingController::class, 'requestMeeting']);
+    Route::get('response-meetings', [RequestMeetingController::class, 'responseMeetings']);
 });
 
 Route::prefix('doctor')->group(function () {
@@ -71,4 +72,6 @@ Route::prefix('doctor')->middleware(['auth:doctor_api'])->group(function () {
     Route::put('availabilities/{id}', [AvailabilityController::class, 'update']);
     Route::post('accept-meeting', [MeetingController::class, 'acceptMeeting']);
     Route::post('reject-meeting', [MeetingController::class, 'rejectMeeting']);
+    Route::get('get-all-meetings', [MeetingController::class, 'index']);
+    Route::get('get-one-meeting/{id}', [MeetingController::class, 'show']);
 });
