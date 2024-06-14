@@ -8,5 +8,5 @@ return [
     // socialite
     "GoogleDriver"=>"google",
     // flask model
-    "FLASK"=>"https://63db-197-37-225-235.ngrok-free.app/api/submit",
+    "FLASK"=>"https://e105-197-37-209-243.ngrok-free.app/api/submit",
 ];

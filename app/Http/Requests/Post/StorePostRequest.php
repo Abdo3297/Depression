@@ -15,7 +15,7 @@ class StorePostRequest extends FormRequest
     {
         return [
             'text_body' => ['required_without:image','string'],
-            'image' => ['required_without:body','image','mimes:png,jpg','max:90000'],
+            'image' => ['required_without:text_body','image','mimes:png,jpg','max:90000'],
             'doctor_id'=>['required',Rule::exists('doctors','id')]
         ];
     }

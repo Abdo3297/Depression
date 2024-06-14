@@ -29,7 +29,10 @@ class MeetingController extends Controller
     }
     public function acceptMeeting(Request $request)
     {
-        $meeting = Meeting::where('doctor_id',auth('doctor_api')->user()->id)->first();
+        $meeting = Meeting::
+        where('doctor_id',auth('doctor_api')->user()->id)
+        ->where('patient_id',$request->patient_id)
+        ->first();
         $meetings = Zoom::createMeeting([
             "agenda" => $meeting->topic,
             "topic" => $meeting->topic,
@@ -52,18 +55,18 @@ class MeetingController extends Controller
                 'approval_type' => 0, // 0 => Automatically Approve, 1 => Manually Approve, 2 => No Registration Required
             ],
         ]);
-        Meeting::where('doctor_id',auth('doctor_api')->user()->id)->first()->update([
+        Meeting::where('doctor_id',auth('doctor_api')->user()->id)->where('patient_id',$request->patient_id)->first()->update([
             'topic' => $meetings['data']['topic'],
             'meeting_id' => $meetings['data']['id'],
             'start_url' => $meetings['data']['start_url'],
             'join_url' => $meetings['data']['join_url'],
             'status' => 'accepted',
         ]);
-        $getMeeting = Meeting::where('doctor_id',auth('doctor_api')->user()->id)->first();
+        $getMeeting = Meeting::where('doctor_id',auth('doctor_api')->user()->id)->where('patient_id',$request->patient_id)->first();
         return $this->okResponse('meeting accepted successfully',AcceptMeetingResource::make($getMeeting));
     }
     public function rejectMeeting(Request $request) {
-        Meeting::where('doctor_id',auth('doctor_api')->user()->id)->first()->update([
+        Meeting::where('doctor_id',auth('doctor_api')->user()->id)->where('patient_id',$request->patient_id)->first()->update([
             'status'=>'rejected'
         ]);
         return response()->json([

@@ -14,7 +14,7 @@ class RequestMeetingRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'patient_id' => ['required',Rule::exists('doctors','id')],
+            'patient_id' => ['required',Rule::exists('patients','id')],
             'doctor_id' => ['required',Rule::exists('doctors','id')],
             'topic' => ['required','string'],
         ];
